@@ -45,7 +45,7 @@ def train_blr(csv_data, random_seeds=1):
     # Import model-evaluation metrics from scikit-learn
 
     # Create a boosted linear regression object
-    lr = blr(0.1, 1000, 20)
+    lr = blr(learning_rate, max_iter, early_stopping)
 
     # Train the model
     lr.fit(x_train, y_train, x_val, y_val)
@@ -65,9 +65,12 @@ if __name__ == '__main__':
     rmse_train = []
     rmse_val = []
     rmse_test = []
+
+    learning_rate, max_iter, early_stopping = 0.1, 1000, 20
+
     for r in range(100):
         y_train, y_train_pred, y_val, y_val_pred, y_test, y_test_pred = \
-            train_blr(csv_data, r)
+            train_blr(csv_data, r, learning_rate, max_iter, early_stopping)
         mae_train.append(mean_absolute_error(y_train, y_train_pred))
         mae_test.append(mean_absolute_error(y_test, y_test_pred))
         mae_val.append(mean_absolute_error(y_val, y_val_pred))
