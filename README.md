@@ -77,6 +77,7 @@ The training and evaluating flow chart is shown as below:
 
 - out-of-sample performance
 ![](img/bar_el_lr.png)
+![](img/lbt_lr.png)
 
 # The feature importance score of the DT-bagging and DT-gradient boosting models.
 
