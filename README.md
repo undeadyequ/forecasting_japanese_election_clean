@@ -1,4 +1,4 @@
-# Forecasting Japanese elections by ensemble decision tree models
+# Forecasting Japanese elections: A nonlinear machine-learning approach
 This is the original scikit-learn implement of the paper: "Forecasting Japanese elections: A nonlinear machine-learning approach"
 
 # Requirements
