@@ -1,5 +1,5 @@
 # Forecasting Japanese elections by ensemble decision tree models
-This is the origin scikit-learn implement of the following paper: Forecasting Japanese elections by ensemble decision tree models.
+This is the original scikit-learn implement of the paper: "Forecasting Japanese elections: A nonlinear machine-learning approach"
 
 # Requirements
 - Python 3.7.9
@@ -67,14 +67,15 @@ Year LDP_seats GDP PM_approval DAYS
 2021	56.1	-4.4	40.3	1470
 ```
 
-# The performance of the proposed ensemble learning and benchmark models 
-
 The training and evaluating flow chart is shown as below:
 
 ![](img/flowchart.jpg)
 
-The evaluated performance is shown as below:
+# The performance of the proposed ensemble learning and benchmark models 
+- in-sample performance
 ![](img/bar_el_dt_a.png)
+
+- out-of-sample performance
 ![](img/bar_el_lr.png)
 
 # The feature importance score of the DT-bagging and DT-gradient boosting models.
