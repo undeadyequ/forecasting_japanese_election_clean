@@ -41,7 +41,7 @@ The parameter that you can change are shown in following table:
 |  early_stopping  | Whether set the early stopping            |
 
 # Japanese election data
-The Japanese election dataset which can be publically accesible is shown below:
+The japanese election dataset, which can be publicly accessible, and the scatter plot of explanatory variables (LDP: Liberal Democratic Party) are shown below:
 ```python
 Year LDP_seats GDP PM_approval DAYS
 1960	63.4	9.42	41.6	913
@@ -67,27 +67,26 @@ Year LDP_seats GDP PM_approval DAYS
 2021	56.1	-4.4	40.3	1470
 ```
 
-The training and evaluating flow chart is shown as below:
+![](paper_result/fig1.png)
 
-![](img/flowchart.jpg)
 
-# The performance of the proposed ensemble learning and benchmark models 
-- in-sample performance
-![](img/bar_el_dt_a.png)
+# The performance of the proposed ensemble learning model and benchmark models
+- In-sample performance of the DT-based ensemble models. LBT: Lewis-Beck and Tien; DT: decision tree; MAE: mean absolute error; and RMSE: root mean squared error.
+![](paper_result/fig2.png)
 
-- out-of-sample performance
-![](img/bar_el_lr.png)
-![](img/lbt_lr.png)
+- Out-of-sample performance of the linear ensemble models.
+![](paper_result/fig3.png)
 
-# The feature importance score of the DT-bagging and DT-gradient boosting models.
+-  Out-of-sample performance of the DT-based ensemble models.
+![](paper_result/fig4.png)
+
+# The feature importance score of the DT-bagging and DT-gradient boosting models
 
 The feature importance of the DT-bagging and DT-gradient boosting models are shown as below:
 
-![](img/feature_importance.png)
+![](paper_result/fig7.png)
 
 # The forecasting results by the proposed and benchmark models.
-The forecasting results by the proposed and benchmark models on 1960-2012 dataset are shown below:
-![](img/gd_pred.png)
+The forecasting results by the proposed and benchmark models on 1960-2021 dataset are shown below:
+![](paper_result/fig5.png)
 
-
- 
