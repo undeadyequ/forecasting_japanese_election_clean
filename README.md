@@ -31,6 +31,11 @@ The parameter that you can change are shown in following table:
 python pred_blr.py
 ```
 
+## To draw the figures, as shown in paper, please run the following command:
+```c
+python make_figures.py
+```
+
 The parameter that you can change are shown in following table:
 
 |  Parameter name  | Description of parameter                  |
@@ -89,4 +94,5 @@ The feature importance of the DT-bagging and DT-gradient boosting models are sho
 # The forecasting results by the proposed and benchmark models.
 The forecasting results by the proposed and benchmark models on 1960-2021 dataset are shown below:
 ![](paper_result/fig5.png)
+
 
