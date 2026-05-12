@@ -94,6 +94,3 @@ The feature importance of the DT-bagging and DT-gradient boosting models are sho
 # The forecasting results by the proposed and benchmark models.
 The forecasting results by the proposed and benchmark models on 1960-2021 dataset are shown below:
 ![](paper_result/fig5.png)
-
-[![DOI](https://zenodo.org/badge/829509175.svg)](https://doi.org/10.5281/zenodo.20131371)
-
