@@ -1,96 +1,211 @@
 # Forecasting Japanese elections: A nonlinear machine-learning approach
-This is the original scikit-learn implement of the paper: "Forecasting Japanese elections: A nonlinear machine-learning approach"
 
-# Requirements
-- Python 3.7.9
-- pandas==1.1.4
-- matplotlib==3.4.0
-- numpy==1.19.4
-- scikit_learn==1.2.0
+This repository is the reproducibility package for the paper:
 
-Dependencies can be installed using the following command:
-```c
-pip install -r ./requirements.txt
+> Sota Kato, Xuan Luo, Budrul Ahsan, Asahi Obata, and Takafumi Nakanishi. "Forecasting Japanese elections: A nonlinear machine-learning approach." *International Journal of Forecasting*.
+
+**Package assembled:** 2026-06-06
+
+---
+
+## Authors and contact
+
+| Name | Contact |
+|------|---------|
+| Sota Kato | skato@glocom.ac.jp, sotakatoj@gmail.com|
+| Xuan Luo | rosengaga@gmail.com |
+| Budrul Ahsan | |
+| Asahi Obata | |
+| Takafumi Nakanishi | |
+
+For questions regarding this reproducibility package, please contact **Xuan Luo** at rosengaga@gmail.com.
+
+---
+
+## Repository structure
+
+```
+forecasting_japanese_election_clean/
+│
+├── data/                          # Raw input data
+│   └── data_election_2020_correct2012.csv
+│
+├── intermediary_data/             # Outputs of forcasting_best_param.py
+│   ├── model_results_N2012.csv
+│   ├── model_results_U2009.csv
+│   ├── model_results_N2009_2012.csv
+│   ├── predictions_N2012.csv
+│   └── feature_importance_N2012.json
+│
+├── figure_table_data/             # Formatted inputs for figures and tables
+│   ├── fig1_data.csv
+│   ├── fig2_3_4_data.csv
+│   ├── fig5_6_data.csv
+│   ├── fig7_data.csv
+│   ├── tableA1_data.csv
+│   └── tableA2_data.csv
+│
+├── output/                        # Final figures and tables
+│   ├── fig1.png / fig1.pdf
+│   ├── fig2.png / fig2.pdf
+│   ├── ...
+│   ├── table1.csv – table4.csv
+│   ├── tableA1.csv, tableA2.csv
+│
+├── forcasting_best_param.py       # Main training script (all models, all conditions)
+├── prepare_data.py                # Converts intermediary_data/ → figure_table_data/
+├── make_figures.py                # Generates all figures (Fig. 1–7)
+├── make_tables.py                 # Generates all tables (Table 1–4, A1–A2)
+├── boostedLinearRegression.py     # Custom BLR model implementation
+└── requirements.txt
 ```
 
-# Model evaluation
-## To evaluate the proposed or benchmark models (except linear gradient boosting), please run the following command:
-```c
-python forcasting_best_param.py
-```
-The parameter that you can change are shown in following table:
+---
 
-|  Parameter name  | Description of parameter                  |
-| ---- |-------------------------------------------|
-|  method  | The proposed or the benchmarked model     |
-|  data  | The dataset used for training and testing |
-|  seed_num  | The seed num                              |
+## Computing environment
 
-## To evaluate the linear gradient boosting model, please run the following command:
-```c
-python pred_blr.py
+- **Language:** Python 3.7.9
+- **License:** MIT
+- **Platform tested:** macOS (MacBook)
+
+Install all dependencies using:
+
+```bash
+pip install -r requirements.txt
 ```
 
-## To draw the figures, as shown in paper, please run the following command:
-```c
-python make_figures.py
+**Package versions (requirements.txt):**
+
+| Package | Version |
+|---------|---------|
+| pandas | 1.1.4 |
+| matplotlib | 3.4.0 |
+| numpy | 1.19.4 |
+| scikit-learn | 1.2.0 |
+| xgboost | 1.2.1 |
+
+> **Note:** Exact numerical reproducibility requires using the package versions listed above. Differences in numpy and scikit-learn versions affect random number sequences, which can cause ±0.01 differences in reported metrics.
+
+To replicate the exact environment using conda:
+
+```bash
+conda create -n election_forecast python=3.7.9
+conda activate election_forecast
+pip install -r requirements.txt
 ```
 
-The parameter that you can change are shown in following table:
+No GPU or parallel computing is required. All experiments run on a standard CPU.
 
-|  Parameter name  | Description of parameter                  |
-| ---- |-------------------------------------------|
-|  learning_rate  | The learning rate                         |
-|  data  | The dataset used for training and testing |
-|  max_iter  | The max ieration                          |
-|  early_stopping  | Whether set the early stopping            |
+---
 
-# Japanese election data
-The japanese election dataset, which can be publicly accessible, and the scatter plot of explanatory variables (LDP: Liberal Democratic Party) are shown below:
-```python
-Year LDP_seats GDP PM_approval DAYS
-1960	63.4	9.42	41.6	913
-1963	60.6	8.6	38.7	1096
-1967	57	10.25	25.8	1165
-1969	59.3	11.91	37.9	1063
-1972	55.2	4.39	54.8	1079
-1976	48.7	3.09	29.5	1456
-1979	48.5	5.27	26	1036
-1980	55.6	5.48	29.1	259
-1983	48.9	3.38	37.3	1274
-1986	58.6	6.33	42.6	931
-1990	53.7	5.37	36.5	1323
-1993	43.6	0.82	23.1	1246
-1996	47.8	2.74	39.8	1190
-2000	48.5	-0.25	30.4	1344
-2003	49.4	0.12	49.6	1232
-2005	61.7	2.2	39.9	672
-2009	24.8	-1.09	16.3	1449
-2012	61.3	-0.12	17.3	1204
-2014	61.1	2	45.5	728
-2017	60.4	1.03	41.8	1043
-2021	56.1	-4.4	40.3	1470
+## Data
+
+The dataset covers 20 Japanese general elections from 1960 to 2021 (the 2012 election is excluded from model training and evaluation; see the paper for details).
+
+**File:** `data/data_election_2020_correct2012.csv`
+
+| Variable | Description | Source |
+|----------|-------------|--------|
+| `Year` | Election year | — |
+| `LDP_seats` | LDP seat share (%) | — |
+| `LDP_votes` | LDP vote share (%) | — |
+| `GDP` | GDP growth rate (%) | Economic outlook |
+| `PM_approval` | Cabinet approval rating (%) | Jiji Press |
+| `DAYS` | Days elapsed since previous election | — |
+
+The dataset is directly included in this repository. No additional download is required.
+
+```
+Year  LDP_seats   GDP  PM_approval  DAYS
+1960       63.4  9.42         41.6   913
+1963       60.6  8.60         38.7  1096
+1967       57.0 10.25         25.8  1165
+1969       59.3 11.91         37.9  1063
+1972       55.2  4.39         54.8  1079
+1976       48.7  3.09         29.5  1456
+1979       48.5  5.27         26.0  1036
+1980       55.6  5.48         29.1   259
+1983       48.9  3.38         37.3  1274
+1986       58.6  6.33         42.6   931
+1990       53.7  5.37         36.5  1323
+1993       43.6  0.82         23.1  1246
+1996       47.8  2.74         39.8  1190
+2000       48.5 -0.25         30.4  1344
+2003       49.4  0.12         49.6  1232
+2005       61.7  2.20         39.9   672
+2009       24.8 -1.09         16.3  1449
+2014       61.1  2.00         45.5   728
+2017       60.4  1.03         41.8  1043
+2021       56.1 -4.40         40.3  1470
 ```
 
-![](paper_result/fig1.png)
+---
 
+## Reproducing tables and figures
 
-# The performance of the proposed ensemble learning model and benchmark models
-- In-sample performance of the DT-based ensemble models. LBT: Lewis-Beck and Tien; DT: decision tree; MAE: mean absolute error; and RMSE: root mean squared error.
-![](paper_result/fig2.png)
+All tables and figures are produced by running four scripts in sequence:
 
-- Out-of-sample performance of the linear ensemble models.
-![](paper_result/fig3.png)
+```bash
+python forcasting_best_param.py   # Train all models → intermediary_data/
+python prepare_data.py            # Format data     → figure_table_data/
+python make_figures.py            # Draw figures    → output/
+python make_tables.py             # Build tables    → output/
+```
 
--  Out-of-sample performance of the DT-based ensemble models.
-![](paper_result/fig4.png)
+**Expected outputs:**
 
-# The feature importance score of the DT-bagging and DT-gradient boosting models
+| Output file | Paper reference |
+|-------------|-----------------|
+| `output/fig1.pdf` | Figure 1 |
+| `output/fig2.pdf` | Figure 2 |
+| `output/fig3.pdf` | Figure 3 |
+| `output/fig4.pdf` | Figure 4 |
+| `output/fig5.pdf` | Figure 5 |
+| `output/fig6.pdf` | Figure 6 |
+| `output/fig7.pdf` | Figure 7 |
+| `output/table1.csv` | Table 1 |
+| `output/table2.csv` | Table 2 |
+| `output/table3.csv` | Table 3 |
+| `output/table4.csv` | Table 4 |
+| `output/tableA1.csv` | Table A1 (Appendix) |
+| `output/tableA2.csv` | Table A2 (Appendix) |
 
-The feature importance of the DT-bagging and DT-gradient boosting models are shown as below:
+---
 
-![](paper_result/fig7.png)
+## Runtime
 
-# The forecasting results by the proposed and benchmark models.
-The forecasting results by the proposed and benchmark models on 1960-2021 dataset are shown below:
-![](paper_result/fig5.png)
+- **Hardware:** MacBook (standard CPU, no GPU required)
+- **Expected total runtime:** approximately 20 minutes
+- The most time-consuming step is `forcasting_best_param.py`, which trains 7 model variants across up to 100 random seeds for three data conditions.
+
+---
+
+## Figures
+
+**Figure 1.** Scatter plots of explanatory variables vs. LDP seat share (1960–2021, 2012 excluded). The 2009 election is marked as an outlier.
+
+![Figure 1](output/fig1.png)
+
+**Figure 2.** In-sample performance (MAE and RMSE) of all models.
+
+![Figure 2](output/fig2.png)
+
+**Figure 3.** Out-of-sample performance of linear ensemble models.
+
+![Figure 3](output/fig3.png)
+
+**Figure 4.** Out-of-sample performance of DT-based ensemble models.
+
+![Figure 4](output/fig4.png)
+
+**Figure 5.** Forecasting results vs. electoral outcomes (1960–2021).
+
+![Figure 5](output/fig5.png)
+
+**Figure 6.** Performance gain of DT-gradient boosting over LBT.
+
+![Figure 6](output/fig6.png)
+
+**Figure 7.** Permutation feature importance for DT-bagging and DT-gradient boosting.
+
+![Figure 7](output/fig7.png)

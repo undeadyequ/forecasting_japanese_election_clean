@@ -53,9 +53,9 @@ BOTTOM_MARGIN_IN = 0.45 # space below axis (xlabel + tick labels)
 UNIT_H = 0.65           # physical inches per model row
 
 # Load data
-df1 = pd.read_csv('paper_result/fig_1_data.csv')
-df234 = pd.read_csv('paper_result/fig_2_3_4_data.csv', index_col=0).dropna(axis=1, how='all')
-df56 = pd.read_csv('paper_result/fig_5_6_data.csv', index_col=0)
+df1 = pd.read_csv('figure_table_data/fig1_data.csv')
+df234 = pd.read_csv('figure_table_data/fig2_3_4_data.csv', index_col=0).dropna(axis=1, how='all')
+df56 = pd.read_csv('figure_table_data/fig5_6_data.csv', index_col=0)
 
 
 def draw_bar(labels, mae, rmse, outpath):
@@ -117,8 +117,8 @@ for ax, (col, xlabel) in zip(axes, specs):
     ax.set_xlabel(xlabel)
     ax.set_ylim(20, 70)
 axes[0].set_ylabel('LDP ratio (%)')
-plt.savefig('paper_result/fig1.pdf')
-plt.savefig('paper_result/fig1.png', dpi=200)
+plt.savefig('output/fig1.pdf')
+plt.savefig('output/fig1.png', dpi=200)
 plt.close()
 print("Fig 1 done")
 
@@ -129,7 +129,7 @@ labels_in = ['LBT (2012)', 'Linear bagging', 'Linear gradient boosting',
 draw_bar(labels_in,
          [df234.loc[k, 'train_mae'] for k in keys_in],
          [df234.loc[k, 'train_rmse'] for k in keys_in],
-         'paper_result/fig2')
+         'output/fig2')
 print("Fig 2 done")
 
 # ---------------- Fig 3: out-of-sample, linear (3 models) ----------------
@@ -138,7 +138,7 @@ labels_lin = ['LBT (2012)', 'Linear bagging', 'Linear gradient boosting']
 draw_bar(labels_lin,
          [df234.loc[k, 'test_mae'] for k in keys_lin],
          [df234.loc[k, 'test_rmse'] for k in keys_lin],
-         'paper_result/fig3')
+         'output/fig3')
 print("Fig 3 done")
 
 # ---------------- Fig 4: out-of-sample, DT (3 models) ----------------
@@ -147,7 +147,7 @@ labels_dt = ['LBT (2012)', 'DT-bagging', 'DT-gradient boosting']
 draw_bar(labels_dt,
          [df234.loc[k, 'test_mae'] for k in keys_dt],
          [df234.loc[k, 'test_rmse'] for k in keys_dt],
-         'paper_result/fig4')
+         'output/fig4')
 print("Fig 4 done")
 
 # ---------------- Fig 5: time series ----------------
@@ -172,8 +172,8 @@ ax.set_xticklabels(years, rotation=90)
 ax.set_xlim(-0.5, len(years) - 0.5)
 ax.set_ylim(20, 70)
 ax.legend(loc='lower left', frameon=True, framealpha=0.95)
-plt.savefig('paper_result/fig5.pdf')
-plt.savefig('paper_result/fig5.png', dpi=200)
+plt.savefig('output/fig5.pdf')
+plt.savefig('output/fig5.png', dpi=200)
 plt.close()
 print("Fig 5 done")
 
@@ -202,13 +202,13 @@ legend_elements = [
     Patch(facecolor=COLOR_NEG, label='LBT outperforms DT-gradient boosting'),
 ]
 ax.legend(handles=legend_elements, loc='lower left', frameon=True, framealpha=0.95)
-plt.savefig('paper_result/fig6.pdf')
-plt.savefig('paper_result/fig6.png', dpi=200)
+plt.savefig('output/fig6.pdf')
+plt.savefig('output/fig6.png', dpi=200)
 plt.close()
 print("Fig 6 done")
 
 # ---------------- Fig 7: feature importance (box plot, 2 panels) ----------------
-df7 = pd.read_csv('paper_result/fig7_data.csv')
+df7 = pd.read_csv('figure_table_data/fig7_data.csv')
 features_order = ['Days', 'GDP', 'PM approval']
 panel_specs = [('bag_dt', 'DT-bagging'), ('gradient_boost', 'DT-gradient boosting')]
 
@@ -251,7 +251,7 @@ legend_elements = [
 fig.legend(handles=legend_elements, loc='upper center',
            bbox_to_anchor=(0.5, 1.0), ncol=2, frameon=False)
 
-plt.savefig('paper_result/fig7.pdf')
-plt.savefig('paper_result/fig7.png', dpi=200)
+plt.savefig('output/fig7.pdf')
+plt.savefig('output/fig7.png', dpi=200)
 plt.close()
 print("Fig 7 done")
