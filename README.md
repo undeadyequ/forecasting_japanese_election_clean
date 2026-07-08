@@ -4,7 +4,7 @@ This repository is the reproducibility package for the paper:
 
 > Sota Kato, Xuan Luo, Budrul Ahsan, Asahi Obata, and Takafumi Nakanishi. "Forecasting Japanese elections: A nonlinear machine-learning approach." *International Journal of Forecasting*.
 
-**Package assembled:** 2026-06-06
+**Package assembled:** 2026-07-01
 
 ---
 
@@ -28,7 +28,7 @@ For questions regarding this reproducibility package, please contact **Xuan Luo*
 forecasting_japanese_election_clean/
 │
 ├── data/                          # Raw input data
-│   └── data_election_2020_correct2012.csv
+│   └── japanese_election_until_2021.csv
 │
 ├── intermediary_data/             # Outputs of forcasting_best_param.py
 │   ├── model_results_N2012.csv
@@ -65,12 +65,14 @@ forecasting_japanese_election_clean/
 ## Computing environment
 
 - **Language:** Python 3.7.9
-- **License:** MIT
+- **License:** No proprietary software is required to run the reproducibility check; all software used (Python, scikit-learn, etc.) is open-source. Terms for the data are described in the Data section.
 - **Platform tested:** macOS (MacBook)
 
-Install all dependencies using:
+Python 3.7.9 is not available via pip and must be installed via conda. To replicate the exact environment:
 
 ```bash
+conda create -n ijf-election-replication python=3.7.9
+conda activate ijf-election-replication
 pip install -r requirements.txt
 ```
 
@@ -84,17 +86,9 @@ pip install -r requirements.txt
 | scikit-learn | 1.2.0 |
 | xgboost | 1.2.1 |
 
-> **Note:** Exact numerical reproducibility requires using the package versions listed above. Differences in numpy and scikit-learn versions affect random number sequences, which can cause ±0.01 differences in reported metrics.
+> **Note:** The reported results were produced with the package versions listed above and are reproduced exactly under that environment. Running the code with a different set of library versions may produce very small numerical differences in some reported metrics.
 
-To replicate the exact environment using conda:
-
-```bash
-conda create -n election_forecast python=3.7.9
-conda activate election_forecast
-pip install -r requirements.txt
-```
-
-No GPU or parallel computing is required. All experiments run on a standard CPU.
+No GPU, parallel computing, or other special setup is required. All experiments run on a standard CPU.
 
 ---
 
@@ -102,16 +96,31 @@ No GPU or parallel computing is required. All experiments run on a standard CPU.
 
 The dataset covers 20 Japanese general elections from 1960 to 2021 (the 2012 election is excluded from model training and evaluation; see the paper for details).
 
-**File:** `data/data_election_2020_correct2012.csv`
+**File:** `data/japanese_election_until_2021.csv`
 
-| Variable | Description | Source |
-|----------|-------------|--------|
-| `Year` | Election year | — |
-| `LDP_seats` | LDP seat share (%) | — |
-| `LDP_votes` | LDP vote share (%) | — |
-| `GDP` | GDP growth rate (%) | Economic outlook |
-| `PM_approval` | Cabinet approval rating (%) | Jiji Press |
-| `DAYS` | Days elapsed since previous election | — |
+| Variable      | Description                          | Source |
+| ------------- | ------------------------------------ | ------ |
+| `Year`        | Election year                        | —      |
+| `LDP_seats`   | LDP seat share (%)                   | Ministry of Internal Affairs and Communications |
+| `GDP`         | GDP growth rate (%)                  | ESRI, Cabinet Office, Japan |
+| `PM_approval` | Cabinet approval rating (%)          | Jiji Press |
+| `DAYS`        | Days elapsed since previous election | —      |
+
+**LDP_seats:**
+> The column labeled LDP_seats in the replication CSV contains the LDP seat-occupancy rate (percent), not a raw seat count.
+> **Source**: Party-level seat totals for each House of Representatives election were compiled from the official election returns published by the Ministry of Internal Affairs and Communications (and its predecessor ministries), specifically the Results of the House of Representatives General Election and the National Review of Supreme Court Justices. The compiled figures were then cross-checked against election results reported by Asahi Shimbun and NHK. 
+> > Notes on seat counts: For some elections, the party seat totals include members endorsed by the party shortly after polling day (post-election endorsees), whom the official election returns record as independents. For those elections, the figures used here can therefore differ slightly from the official election-returns totals (e.g., the 2021 House of Representatives election: LDP = 261 including two post-election endorsees, vs. 259 on the election-returns basis).
+
+**GDP:**
+> **Source**: Economic and Social Research Institute (ESRI), Cabinet Office, Government of Japan —> National Accounts of Japan. For each general election, the value is the real GDP growth rate of the calendar year preceding the election. 
+> > Notes: Historical GDP growth figures were compiled from the Cabinet Office's published national accounts across benchmark revisions. Because the underlying official series span successive changes in base year and SNA framework, earlier observations reflect older benchmark vintages and therefore do not always coincide with the currently published chain-linked series. The analysis uses the snapshot included in the replication package. Access date: [2026-07-01].
+
+**PM_approval:**
+> **Source**: Jiji Press monthly national public opinion poll ("Jiji Yoron Chosa"), conducted by Central Research Services, Inc. (Chuo Chosa Sha) for Jiji Press every month since 1960 and published in Chuo Chosa Ho. For each election, the value is the cabinet approval rate surveyed one month prior to the election. 
+> > Notes: The survey is conducted nationwide among adults aged 18 and over (20 and over before 2016) using in-person interviews. The original copyrighted articles are not redistributed in this package; the analysis-ready values are included in the replication CSV. Access to the original source articles is not required to reproduce any table or figure in the paper.
+
+**DAYS:**
+> The Days variable is the number of days between two consecutive general elections, computed from the official election dates.
 
 The dataset is directly included in this repository. No additional download is required.
 
@@ -148,21 +157,21 @@ All tables and figures are produced by running four scripts in sequence:
 ```bash
 python forcasting_best_param.py   # Train all models → intermediary_data/
 python prepare_data.py            # Format data     → figure_table_data/
-python make_figures.py            # Draw figures    → output/
-python make_tables.py             # Build tables    → output/
+python make_figures.py            # Draw figures    → output/*.png/pdf
+python make_tables.py             # Build tables    → output/.csv
 ```
 
 **Expected outputs:**
 
 | Output file | Paper reference |
 |-------------|-----------------|
-| `output/fig1.pdf` | Figure 1 |
-| `output/fig2.pdf` | Figure 2 |
-| `output/fig3.pdf` | Figure 3 |
-| `output/fig4.pdf` | Figure 4 |
-| `output/fig5.pdf` | Figure 5 |
-| `output/fig6.pdf` | Figure 6 |
-| `output/fig7.pdf` | Figure 7 |
+| `output/fig1.png/pdf` | Figure 1 |
+| `output/fig2.png/pdf` | Figure 2 |
+| `output/fig3.png/pdf` | Figure 3 |
+| `output/fig4.png/pdf` | Figure 4 |
+| `output/fig5.png/pdf` | Figure 5 |
+| `output/fig6.png/pdf` | Figure 6 |
+| `output/fig7.png/pdf` | Figure 7 |
 | `output/table1.csv` | Table 1 |
 | `output/table2.csv` | Table 2 |
 | `output/table3.csv` | Table 3 |

@@ -15,8 +15,7 @@ os.makedirs("figure_table_data", exist_ok=True)
 
 # ── Fig 1: raw descriptive data (all years, no filtering) ─────────────────────
 
-df_raw = pd.read_csv("data/data_election_2020_correct2012.csv")
-df_raw = df_raw[df_raw["Year"] != 2012]
+df_raw = pd.read_csv("data/japanese_election_until_2021.csv")
 df_raw[["Year", "LDP_seats", "GDP", "PM_approval", "DAYS"]].to_csv(
     "figure_table_data/fig1_data.csv", index=False)
 print("Saved figure_table_data/fig1_data.csv")

@@ -11,6 +11,7 @@ Table 4  : mean feature importance (bag_dt, gradient_boost)   [N2012]
 Table A1 : out-of-sample MAE / RMSE for lr, gradient_boost    [U2009]
 Table A2 : out-of-sample MAE / RMSE for lr, gradient_boost    [N2009_2012]
 """
+import math
 import os
 import numpy as np
 import pandas as pd
@@ -40,7 +41,7 @@ rows = []
 for col, label in var_map.items():
     rows.append({
         "Variable":           label,
-        "Mean":               rd(df1[col].mean()),
+        "Mean":               rd(math.fsum(df1[col]) / len(df1[col])),
         "Standard Deviation": rd(df1[col].std()),
         "Minimum":            rd(df1[col].min()),
         "Maximum":            rd(df1[col].max()),

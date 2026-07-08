@@ -12,8 +12,6 @@ from xgboost import XGBRegressor
 from sklearn.svm import SVR
 from sklearn.inspection import permutation_importance
 from boostedLinearRegression import blr as BLRModel
-import logging
-import argparse
 import time
 import json
 
@@ -38,9 +36,9 @@ def random_select_data(data, s, data_condition="N2012"):
     # Split train/test dataset
     data_train = csvdata.iloc[int(len(csvdata) / 4):, :]
     data_test = csvdata.iloc[:int(len(csvdata) / 4), :]
-    x_train = data_train.drop(['Year', 'LDP_votes', 'LDP_seats'], axis=1)
+    x_train = data_train.drop(['Year', 'LDP_seats'], axis=1)
     y_train = data_train['LDP_seats']
-    x_test = data_test.drop(['Year', 'LDP_votes', 'LDP_seats'], axis=1)
+    x_test = data_test.drop(['Year', 'LDP_seats'], axis=1)
     y_test = data_test['LDP_seats']
     return x_train, y_train, x_test, y_test
 
@@ -49,7 +47,7 @@ def _blr_select_data(data):
     """Data selection for BLR: always uses N2012 condition (verbatim from pred_blr.py)."""
     csvdata = pd.read_csv(data, delimiter=",")
     csvdata = csvdata[csvdata['Year'] != 2012]
-    x = csvdata.drop(['Year', 'LDP_votes', 'LDP_seats'], axis=1)
+    x = csvdata.drop(['Year', 'LDP_seats'], axis=1)
     y = csvdata['LDP_seats']
     return x, y
 
@@ -223,7 +221,6 @@ def train_clf(method, seeds_num, csv_data, data_condition):
     if method == "rf":
         feature_importance = champ_estimator.feature_importances_
         feature_importances.append(feature_importance)
-        logging.info("ft importance: {}".format(feature_importances))
 
     return train_maes, train_rmses, test_maes, test_rmses, y_pred_champ, feats_important_dicts, feats_import_array
 
@@ -286,7 +283,6 @@ def show_permutation_importance(model, x_test, y_test):
     r = permutation_importance(model, x_test, y_test,
                                n_repeats=30,
                                random_state=0)
-    logging.info("Feature Importance")
     for i in r.importances_mean.argsort()[::-1]:
         feat_import_dict[x_test.columns[i]] = [round(r.importances_mean[i], 3),
                                                round(r.importances_std[i], 3)]
@@ -296,10 +292,7 @@ def show_permutation_importance(model, x_test, y_test):
 # ── main ───────────────────────────────────────────────────────────────────────
 
 if __name__ == '__main__':
-    logging.basicConfig(filename="log_correct1.txt", filemode="a",
-                        format="%(asctime)s - %(message)s", level=logging.INFO)
-
-    csv_data = "data/data_election_2020_correct2012.csv"
+    csv_data = "data/japanese_election_until_2021.csv"
     os.makedirs("intermediary_data", exist_ok=True)
 
     seed_num = 100

@@ -2,11 +2,14 @@
 Forecasting Japanese Elections - Figures (Revision R2)
 v5: fixed-margin layout to ensure consistent axis length across Fig.2/3/4.
 """
+import os
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import numpy as np
 import pandas as pd
 from matplotlib.patches import Patch
+
+os.makedirs("output", exist_ok=True)
 
 mpl.rcParams.update({
     'font.family': 'sans-serif',
