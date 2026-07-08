@@ -157,7 +157,7 @@ All tables and figures are produced by running four scripts in sequence:
 ```bash
 python forcasting_best_param.py   # Train all models → intermediary_data/
 python prepare_data.py            # Format data     → figure_table_data/
-python make_figures.py            # Draw figures    → output/*.png/pdf
+python make_figures.py            # Draw figures    → output/*.png, output/*.pdf
 python make_tables.py             # Build tables    → output/.csv
 ```
 
@@ -165,13 +165,13 @@ python make_tables.py             # Build tables    → output/.csv
 
 | Output file | Paper reference |
 |-------------|-----------------|
-| `output/fig1.png/pdf` | Figure 1 |
-| `output/fig2.png/pdf` | Figure 2 |
-| `output/fig3.png/pdf` | Figure 3 |
-| `output/fig4.png/pdf` | Figure 4 |
-| `output/fig5.png/pdf` | Figure 5 |
-| `output/fig6.png/pdf` | Figure 6 |
-| `output/fig7.png/pdf` | Figure 7 |
+| `output/fig1.png`, `output/fig1.pdf` | Figure 1 |
+| `output/fig2.png`, `output/fig2.pdf` | Figure 2 |
+| `output/fig3.png`, `output/fig3.pdf` | Figure 3 |
+| `output/fig4.png`, `output/fig4.pdf` | Figure 4 |
+| `output/fig5.png`, `output/fig5.pdf` | Figure 5 |
+| `output/fig6.png`, `output/fig6.pdf` | Figure 6 |
+| `output/fig7.png`, `output/fig7.pdf` | Figure 7 |
 | `output/table1.csv` | Table 1 |
 | `output/table2.csv` | Table 2 |
 | `output/table3.csv` | Table 3 |
