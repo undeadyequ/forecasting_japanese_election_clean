@@ -80,15 +80,13 @@ pip install -r requirements.txt
 
 | Package | Version |
 |---------|---------|
-| pandas | 1.1.4 |
-| matplotlib | 3.4.0 |
-| numpy | 1.19.4 |
-| scikit-learn | 1.2.0 |
+| pandas | 1.3.3 |
+| matplotlib | 3.5.3 |
+| numpy | 1.21.2 |
+| scikit-learn | 0.24.2 |
 | xgboost | 1.2.1 |
 
 > **Note:** The reported results were produced with the package versions listed above and are reproduced exactly under that environment. Running the code with a different set of library versions may produce very small numerical differences in some reported metrics.
-
-No GPU, parallel computing, or other special setup is required. All experiments run on a standard CPU.
 
 ---
 
@@ -108,16 +106,20 @@ The dataset covers 20 Japanese general elections from 1960 to 2021 (the 2012 ele
 
 **LDP_seats:**
 > The column labeled LDP_seats in the replication CSV contains the LDP seat-occupancy rate (percent), not a raw seat count.
+
 > **Source**: Party-level seat totals for each House of Representatives election were compiled from the official election returns published by the Ministry of Internal Affairs and Communications (and its predecessor ministries), specifically the Results of the House of Representatives General Election and the National Review of Supreme Court Justices. The compiled figures were then cross-checked against election results reported by Asahi Shimbun and NHK. 
-> > Notes on seat counts: For some elections, the party seat totals include members endorsed by the party shortly after polling day (post-election endorsees), whom the official election returns record as independents. For those elections, the figures used here can therefore differ slightly from the official election-returns totals (e.g., the 2021 House of Representatives election: LDP = 261 including two post-election endorsees, vs. 259 on the election-returns basis).
+
+> Notes on seat counts: For some elections, the party seat totals include members endorsed by the party shortly after polling day (post-election endorsees), whom the official election returns record as independents. For those elections, the figures used here can therefore differ slightly from the official election-returns totals (e.g., the 2021 House of Representatives election: LDP = 261 including two post-election endorsees, vs. 259 on the election-returns basis).
 
 **GDP:**
 > **Source**: Economic and Social Research Institute (ESRI), Cabinet Office, Government of Japan —> National Accounts of Japan. For each general election, the value is the real GDP growth rate of the calendar year preceding the election. 
-> > Notes: Historical GDP growth figures were compiled from the Cabinet Office's published national accounts across benchmark revisions. Because the underlying official series span successive changes in base year and SNA framework, earlier observations reflect older benchmark vintages and therefore do not always coincide with the currently published chain-linked series. The analysis uses the snapshot included in the replication package. Access date: [2026-07-01].
+
+> Notes: Historical GDP growth figures were compiled from the Cabinet Office's published national accounts across benchmark revisions. Because the underlying official series span successive changes in base year and SNA framework, earlier observations reflect older benchmark vintages and therefore do not always coincide with the currently published chain-linked series. The analysis uses the snapshot included in the replication package. Access date: 2026-07-01.
 
 **PM_approval:**
 > **Source**: Jiji Press monthly national public opinion poll ("Jiji Yoron Chosa"), conducted by Central Research Services, Inc. (Chuo Chosa Sha) for Jiji Press every month since 1960 and published in Chuo Chosa Ho. For each election, the value is the cabinet approval rate surveyed one month prior to the election. 
-> > Notes: The survey is conducted nationwide among adults aged 18 and over (20 and over before 2016) using in-person interviews. The original copyrighted articles are not redistributed in this package; the analysis-ready values are included in the replication CSV. Access to the original source articles is not required to reproduce any table or figure in the paper.
+
+> Notes: The survey is conducted nationwide among adults aged 18 and over (20 and over before 2016) using in-person interviews. The original copyrighted articles are not redistributed in this package; the analysis-ready values are included in the replication CSV. Access to the original source articles is not required to reproduce any table or figure in the paper.
 
 **DAYS:**
 > The Days variable is the number of days between two consecutive general elections, computed from the official election dates.
